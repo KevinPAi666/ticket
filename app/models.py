@@ -2,7 +2,7 @@ from django.db import models
 
 # Create your models here.
 class order_model(models.Model):
-    id = models.CharField(max_length=10, primary_key=True)
+    id = models.CharField(max_length=8, primary_key=True)
     name = models.CharField(max_length=255)
     address = models.JSONField()
     price = models.IntegerField()

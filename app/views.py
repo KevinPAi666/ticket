@@ -1,7 +1,7 @@
 from rest_framework.generics import GenericAPIView
 from django.http import HttpResponse
 
-from . import forms, models
+from . import forms
 
 import json, re
 
@@ -26,7 +26,7 @@ class order_page(GenericAPIView):
                 address_street = serializer.validated_data['address']['street']
                 form_get = True
 
-                error = stander(id, name, address, address_city, address_district, address_street, price, currency, serializer)
+                error = stander(name, address, price, currency, serializer)
 
                 if len(error) == 0:
                     serializer.save()
@@ -41,14 +41,14 @@ class order_page(GenericAPIView):
                 if form_get:
                     result = str(e)
                 else:
-                    result = f"Please check form {str(e)} is complete."
+                    result = f"Please check form {str(e)} is exist."
 
                 status_code = 400
 
             return HttpResponse(json.dumps(f"{status_code} - {result}"), content_type="application/json", status=status_code)
 
 
-def stander(id, name, address, address_city, address_district, address_street, price, currency, serializer):
+def stander(name, address, price, currency, serializer):
     error = []
 
     for text in name.split(" "):
@@ -69,8 +69,8 @@ def stander(id, name, address, address_city, address_district, address_street, p
     if price > 2000:
         error.append("Price is over 2000")
 
-    for i in [address_city, address_district, address_street]:
-        if len(i) == 0:
+    for i, j in address.items():
+        if len(j) == 0:
             error.append(f"please enter address - {i}")
 
     return error
