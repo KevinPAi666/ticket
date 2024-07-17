@@ -135,15 +135,15 @@ class OrderPageTest(TestCase):
     def test_invalid_address_city_payload(self):
         response = self.client.post(self.url, self.invalid_address_city_payload, format='json')
         self.assertEqual(response.status_code, 400)
-        self.assertIn("Please check form 'city' is complete.", response.content.decode())
+        self.assertIn("Please check form city is exist.", response.content.decode())
 
     def test_invalid_address_district_payload(self):
         response = self.client.post(self.url, self.invalid_address_district_payload, format='json')
         self.assertEqual(response.status_code, 400)
-        self.assertIn("Please check form 'district' is complete.", response.content.decode())
+        self.assertIn("Please check form district is exist.", response.content.decode())
 
     def test_invalid_address_street_payload(self):
         response = self.client.post(self.url, self.invalid_address_street_payload, format='json')
         self.assertEqual(response.status_code, 400)
-        self.assertIn("Please check form 'street' is complete.", response.content.decode())
+        self.assertIn("Please check form street is exist.", response.content.decode())
 

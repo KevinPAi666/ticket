@@ -41,7 +41,8 @@ class order_page(GenericAPIView):
                 if form_get:
                     result = str(e)
                 else:
-                    result = f"Please check form {str(e)} is exist."
+                    err = str(e).replace("\'", "")
+                    result = f"Please check form {err} is exist."
 
                 status_code = 400
 
