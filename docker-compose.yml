@@ -1,0 +1,29 @@
+version: '3'
+
+services:
+  web:
+    build: .
+    command: bash -c "python manage.py makemigrations & python manage.py migrate & python manage.py runserver 0.0.0.0:8888"
+    volumes:
+      - .:/app
+    ports:
+      - "8888:8888"
+    depends_on:
+      - db
+    environment:
+      DJANGO_SETTINGS_MODULE: ticket.settings
+
+  db:
+    image: mysql:latest
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASES: ticket
+      MYSQL_USER: root
+      MYSQL_PASSWORD: password
+    ports:
+      - "3307:3306"
+    volumes:
+      - db_data:/var/lib/mysql
+
+volumes:
+  db_data:
